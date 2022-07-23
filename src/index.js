@@ -90,3 +90,73 @@ export function deepClone(origin, target) {
   }
   return tar;
 }
+
+//获取已滚动距离
+export function getScrolledSize() {
+  if (window.pageXOffset) {
+    return {
+      left: window.pageXOffset,
+      top: window.pageYOffset,
+    };
+  } else {
+    return {
+      //ie浏览器特别之处，这里仅有一个不为0
+      left: document.body.scrollLeft + document.documentElement.scrollLeft,
+      top: document.body.scrollTop + document.documentElement.scrollTop,
+    };
+  }
+}
+//获取视窗宽高
+export function getViewportSize() {
+  if (window.innerWidth) {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  } else {
+    //怪异模式
+    if (document.compatMode === "BackCompat") {
+      return {
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
+      };
+    } else {
+      //兼容w3c的标准模式
+      return {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+      };
+    }
+  }
+}
+//获取整个页面的大小
+export function getPageSize() {
+  if (document.body.scrollWidth) {
+    return {
+      width: document.body.scrollWidth,
+      height: document.body.scrollHeight,
+    };
+  } else {
+    return {
+      width: document.documentElement.scrollWidth,
+      height: document.documentElement.scrollHeight,
+    };
+  }
+}
+//获取某个元素离文档左上角顶点距离
+export function getElementPosition(el) {
+  let parent = el.offsetParent,
+    offsetLeft = el.offsetLeft,
+    offsetTop = el.offsetTop;
+
+  while (parent) {
+    offsetLeft += parent.offsetLeft;
+    offsetTop += parent.offsetTop;
+    //若父级的父级仍有定位元素则继续累加
+    parent = parent.offsetParent;
+  }
+  return {
+    left: offsetLeft,
+    top: offsetTop,
+  };
+}

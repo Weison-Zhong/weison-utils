@@ -1,6 +1,6 @@
 {
   "name": "weison-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "前端常用工具库",
   "main": "dist/index.js",
   "scripts": {
